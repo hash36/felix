@@ -1,9 +1,0 @@
-"""URL configuration for the project."""
-
-from django.urls import path
-
-from api.views import health
-
-urlpatterns = [
-    path('health/', health, name='health'),
-]
