@@ -129,10 +129,10 @@ curl -X POST http://127.0.0.1:8000/events/1/participants/ \
 Response:
 
 ```json
-{"id": 1, "name": "Launch Party", "participants": [2]}
+{"id": 1, "name": "Launch Party"}
 ```
 
-The user's id now appears in the `participants` list — they are registered for the event.
+The response returns the updated event summary for the participant action.
 
 ### 3. (Optional) Obtain a fresh token later
 
