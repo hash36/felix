@@ -8,7 +8,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name', 'last_name']
+        fields = ["id", "email", "first_name", "last_name"]
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -17,11 +17,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'password', 'token']
+        fields = ["username", "email", "first_name", "last_name", "password", "token"]
         extra_kwargs = {
-            'username': {'required': True, 'allow_blank': False},
-            'first_name': {'required': True, 'allow_blank': False},
-            'last_name': {'required': True, 'allow_blank': False},
+            "username": {"required": True, "allow_blank": False},
+            "first_name": {"required": True, "allow_blank": False},
+            "last_name": {"required": True, "allow_blank": False},
         }
 
     def get_token(self, user):
@@ -29,7 +29,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return token.key
 
     def create(self, validated_data):
-        password = validated_data.pop('password')
+        password = validated_data.pop("password")
         user = User(**validated_data)
         user.set_password(password)
         user.save()

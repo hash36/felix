@@ -7,7 +7,7 @@ class Event(models.Model):
     participants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         blank=True,
-        related_name='events',
+        related_name="events",
     )
 
     def __str__(self):
