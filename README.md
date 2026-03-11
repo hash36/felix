@@ -43,10 +43,17 @@ Install dependencies:
 pip install -r backend/requirements.txt
 ```
 
+Create environment variables file:
+
+```bash
+cp .env.example .env
+```
+
 Apply database migrations:
 
 ```bash
 cd backend
+set -a && source ../.env && set +a
 python manage.py migrate
 ```
 
@@ -56,6 +63,7 @@ From `backend/`, start the development server:
 
 ```bash
 cd backend
+set -a && source ../.env && set +a
 python manage.py runserver
 ```
 
@@ -86,6 +94,7 @@ curl -X POST http://127.0.0.1:8000/auth/token/ \
 
 ```bash
 cd backend
+set -a && source ../.env && set +a
 python manage.py test
 ```
 
@@ -107,6 +116,18 @@ python manage.py test
 5. Start the server with `python manage.py runserver`.
 6. Use `python manage.py createsuperuser` if you need a login for local token testing.
 7. Run `python manage.py test` before opening a PR.
+
+## Environment variables
+
+- `DJANGO_SECRET_KEY`: required secret key used by Django.
+- `DJANGO_DEBUG`: optional flag (`True` or `False`), defaults to `False`.
+- `DJANGO_ALLOWED_HOSTS`: optional comma-separated hosts list, defaults to `localhost,127.0.0.1`.
+
+Load env vars from `.env` before running Django commands:
+
+```bash
+set -a && source .env && set +a
+```
 
 ## Adding a new endpoint
 

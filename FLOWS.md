@@ -8,6 +8,7 @@ The admin sets up the app, creates events, and monitors who has signed up.
 
 ```bash
 source venv/bin/activate
+set -a && source .env && set +a
 cd backend
 python manage.py migrate
 python manage.py runserver
@@ -122,7 +123,7 @@ The token is returned immediately — no separate login step needed.
 Use the token from registration and the event `id` shared by the admin:
 
 ```bash
-curl -X POST http://127.0.0.1:8000/events/1/participants/ \
+curl -X POST http://127.0.0.1:8000/events/1/signup/ \
   -H "Authorization: Token xyz789..."
 ```
 

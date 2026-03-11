@@ -18,17 +18,16 @@ def create_event(request):
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(["GET", "POST"])
-def event_participants(request, event_id):
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def list_event_participants(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
+    return Response(UserSerializer(event.participants.all(), many=True).data)
 
-    if request.method == "GET":
-        if not request.user.is_staff:
-            return Response(status=status.HTTP_403_FORBIDDEN)
-        return Response(UserSerializer(event.participants.all(), many=True).data)
 
-    # POST — any authenticated user can join
-    if not request.user.is_authenticated:
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def signup_for_event(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
     event.participants.add(request.user)
     return Response(EventSignupSerializer(event).data)

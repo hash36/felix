@@ -99,7 +99,7 @@ class EventParticipantTests(APITestCase):
     def test_authenticated_user_can_join_event(self):
         token = self._get_token(self.user, "alicepass")
         response = self.client.post(
-            f"/events/{self.event.id}/participants/",
+            f"/events/{self.event.id}/signup/",
             HTTP_AUTHORIZATION=f"Token {token}",
         )
 
@@ -110,14 +110,14 @@ class EventParticipantTests(APITestCase):
         self.assertTrue(self.event.participants.filter(id=self.user.id).exists())
 
     def test_unauthenticated_cannot_join_event(self):
-        response = self.client.post(f"/events/{self.event.id}/participants/")
+        response = self.client.post(f"/events/{self.event.id}/signup/")
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_joining_nonexistent_event_returns_404(self):
         token = self._get_token(self.user, "alicepass")
         response = self.client.post(
-            "/events/99999/participants/",
+            "/events/99999/signup/",
             HTTP_AUTHORIZATION=f"Token {token}",
         )
 
@@ -126,11 +126,11 @@ class EventParticipantTests(APITestCase):
     def test_joining_same_event_twice_is_idempotent(self):
         token = self._get_token(self.user, "alicepass")
         self.client.post(
-            f"/events/{self.event.id}/participants/",
+            f"/events/{self.event.id}/signup/",
             HTTP_AUTHORIZATION=f"Token {token}",
         )
         response = self.client.post(
-            f"/events/{self.event.id}/participants/",
+            f"/events/{self.event.id}/signup/",
             HTTP_AUTHORIZATION=f"Token {token}",
         )
 
